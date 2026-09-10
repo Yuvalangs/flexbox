@@ -185,6 +185,9 @@ h1, h2, h3, .btn, .score-value {
 
 .panel {
   flex: 1 1 380px;
+  /* Without these the fixed width board would widen the panel on phones. */
+  min-width: 0;
+  max-width: 100%;
   padding: 22px;
   background: var(--card);
   border: 2px solid var(--line);
@@ -350,6 +353,7 @@ h1, h2, h3, .btn, .score-value {
 
 .board-frame {
   /* Keeps the fixed size board reachable on very narrow phones. */
+  min-width: 0;
   overflow-x: auto;
   padding-bottom: 4px;
 }
@@ -516,7 +520,9 @@ h1, h2, h3, .btn, .score-value {
   .panel { padding: 16px; }
 
   .control { flex-direction: column; align-items: flex-start; }
-  .control select { width: 100%; max-width: none; }
+
+  /* The column direction would turn flex-basis into a height, so drop it. */
+  .control select { flex: 0 0 auto; width: 100%; max-width: none; }
 
   .actions .btn { flex: 1 1 140px; }
 }
