@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flex Burger &mdash; Learn Flexbox</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-logo" aria-hidden="true">&#127828;</span>
+      <div class="brand-text">
+        <h1>Flex Burger</h1>
+        <p>Stack the order with Flexbox</p>
+      </div>
+    </div>
+
+    <div class="scoreboard">
+      <div class="score-box">
+        <span class="score-label">Level</span>
+        <span class="score-value"><span id="level-current">1</span> / <span id="level-total">8</span></span>
+      </div>
+      <div class="score-box">
+        <span class="score-label">Tries</span>
+        <span class="score-value" id="attempts">0</span>
+      </div>
+      <div class="score-box">
+        <span class="score-label">Served</span>
+        <span class="score-value" id="solved-count">0</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="level-nav" aria-label="Level selection">
+    <ul id="level-list"></ul>
+  </nav>
+
+  <main class="layout">
+
+    <section class="panel ticket-panel" aria-labelledby="ticket-heading">
+      <h2 id="ticket-heading" class="ticket-title">Order ticket</h2>
+      <p class="ticket-goal" id="level-goal">Loading the first order&hellip;</p>
+      <p class="ticket-hint" id="level-hint"></p>
+
+      <form class="controls" id="controls" autocomplete="off">
+        <fieldset>
+          <legend>CSS controls</legend>
+          <div class="control-list" id="control-list"></div>
+        </fieldset>
+      </form>
+
+      <div class="actions">
+        <button type="button" class="btn btn-primary" id="btn-check">Serve it!</button>
+        <button type="button" class="btn btn-ghost" id="btn-reset">Reset level</button>
+        <button type="button" class="btn btn-next" id="btn-next" hidden>Next order &rarr;</button>
+      </div>
+
+      <p class="feedback" id="feedback" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="panel board-panel" aria-labelledby="board-heading">
+      <h2 id="board-heading" class="board-title">The counter</h2>
+
+      <div class="board-frame">
+        <div class="board" id="board" aria-label="Flex container with ingredients"></div>
+      </div>
+
+      <div class="code-preview" aria-label="Generated CSS">
+        <pre><code id="code-output"></code></pre>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="win-overlay" id="win-overlay" hidden>
+    <div class="win-card">
+      <span class="win-emoji" aria-hidden="true">&#127881;</span>
+      <h2>Kitchen closed &mdash; every order served!</h2>
+      <p>You finished all <span id="win-total">8</span> levels in <span id="win-attempts">0</span> tries.</p>
+      <button type="button" class="btn btn-primary" id="btn-restart">Play again</button>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <p>Built with plain HTML, CSS &amp; JavaScript &mdash; Flexbox only, no grid, no libraries.</p>
+  </footer>
+
+  <script src="js/levels.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
