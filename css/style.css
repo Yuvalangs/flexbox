@@ -1,0 +1,522 @@
+/* ==========================================================================
+   Flex Burger - Learn Flexbox by stacking burgers
+   Page layout is built with Flexbox only (no CSS Grid anywhere).
+   ========================================================================== */
+
+:root {
+  --bun:        #f2b544;
+  --bun-dark:   #d9922a;
+  --patty:      #7b4326;
+  --lettuce:    #6fbf4a;
+  --tomato:     #e2483d;
+
+  --ink:        #33231a;
+  --ink-soft:   #7a6255;
+  --paper:      #fffaf1;
+  --card:       #ffffff;
+  --line:       #e8d9c6;
+
+  --ok:         #2f9e5f;
+  --ok-soft:    #e4f6ea;
+  --bad:        #d0453b;
+  --bad-soft:   #fceceb;
+
+  --radius:     16px;
+  --shadow:     0 10px 24px rgba(87, 55, 33, .12);
+
+  /* The board never changes size, so a level solution is screen independent. */
+  --board-w:    440px;
+  --board-h:    320px;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  padding: 0 16px 40px;
+  font-family: "Nunito", "Segoe UI", system-ui, sans-serif;
+  color: var(--ink);
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(242, 181, 68, .18) 0, transparent 42%),
+    radial-gradient(circle at 88% 12%, rgba(226, 72, 61, .14) 0, transparent 38%),
+    radial-gradient(circle at 50% 100%, rgba(111, 191, 74, .16) 0, transparent 45%);
+  min-height: 100vh;
+}
+
+h1, h2, h3, .btn, .score-value {
+  font-family: "Baloo 2", "Nunito", sans-serif;
+}
+
+/* ------------------------------- header --------------------------------- */
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 24px 4px 18px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-logo {
+  font-size: 44px;
+  line-height: 1;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, .18));
+}
+
+.brand-text h1 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: .5px;
+}
+
+.brand-text p {
+  margin: 2px 0 0;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.scoreboard {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.score-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 76px;
+  padding: 8px 12px;
+  background: var(--card);
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+.score-label {
+  font-size: 11px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.score-value {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* ------------------------------ level nav ------------------------------- */
+
+.level-nav {
+  max-width: 1060px;
+  margin: 0 auto 18px;
+}
+
+.level-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.level-dot {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: inherit;
+  color: var(--ink-soft);
+  background: var(--card);
+  border: 2px solid var(--line);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform .15s ease, background-color .15s ease, color .15s ease;
+}
+
+.level-dot:hover:not(:disabled) { transform: translateY(-2px); }
+
+.level-dot:disabled {
+  cursor: not-allowed;
+  opacity: .45;
+}
+
+.level-dot.is-done {
+  color: #fff;
+  background: var(--ok);
+  border-color: var(--ok);
+}
+
+.level-dot.is-active {
+  color: var(--ink);
+  background: var(--bun);
+  border-color: var(--bun-dark);
+  box-shadow: 0 0 0 4px rgba(242, 181, 68, .3);
+}
+
+/* ------------------------------- layout --------------------------------- */
+
+.layout {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 22px;
+  max-width: 1060px;
+  margin: 0 auto;
+}
+
+.panel {
+  flex: 1 1 380px;
+  padding: 22px;
+  background: var(--card);
+  border: 2px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.board-panel { flex: 0 1 500px; }
+
+/* ------------------------------- ticket --------------------------------- */
+
+.ticket-title,
+.board-title {
+  margin: 0 0 10px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.ticket-goal {
+  margin: 0 0 6px;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.ticket-hint {
+  margin: 0 0 18px;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.controls fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.controls legend {
+  padding: 0 0 10px;
+  font-size: 12px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.control-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.control {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.control label {
+  font-family: "Baloo 2", monospace;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--patty);
+}
+
+.control select {
+  flex: 1 1 180px;
+  max-width: 240px;
+  padding: 9px 12px;
+  font-family: inherit;
+  font-size: 15px;
+  color: var(--ink);
+  background: var(--paper);
+  border: 2px solid var(--line);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.control select:focus-visible,
+.btn:focus-visible,
+.level-dot:focus-visible {
+  outline: 3px solid var(--bun-dark);
+  outline-offset: 2px;
+}
+
+/* ------------------------------- buttons -------------------------------- */
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn {
+  padding: 11px 20px;
+  font-size: 16px;
+  font-weight: 700;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease, background-color .12s ease;
+}
+
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0); }
+
+.btn-primary {
+  color: #fff;
+  background: var(--tomato);
+  box-shadow: 0 4px 0 #b5362d;
+}
+
+.btn-primary:hover { background: #ec5347; }
+
+.btn-ghost {
+  color: var(--ink-soft);
+  background: var(--paper);
+  border-color: var(--line);
+}
+
+.btn-next {
+  color: #fff;
+  background: var(--ok);
+  box-shadow: 0 4px 0 #237a49;
+  animation: pop-in .25s ease;
+}
+
+.btn-next[hidden] { display: none; }
+
+/* ------------------------------ feedback -------------------------------- */
+
+.feedback {
+  min-height: 46px;
+  margin: 16px 0 0;
+  padding: 11px 14px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 10px;
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+
+.feedback.is-visible { opacity: 1; }
+
+.feedback.is-ok {
+  color: var(--ok);
+  background: var(--ok-soft);
+}
+
+.feedback.is-bad {
+  color: var(--bad);
+  background: var(--bad-soft);
+  animation: shake .35s ease;
+}
+
+/* -------------------------------- board --------------------------------- */
+
+.board-frame {
+  /* Keeps the fixed size board reachable on very narrow phones. */
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.board {
+  /* Fixed on every screen size so a level solution is always the same. */
+  width: var(--board-w);
+  height: var(--board-h);
+  margin: 0 auto;
+  padding: 14px;
+  background:
+    repeating-linear-gradient(45deg,
+      rgba(123, 67, 38, .05) 0 14px,
+      rgba(123, 67, 38, .02) 14px 28px),
+    #fdf3e2;
+  border: 3px dashed var(--bun-dark);
+  border-radius: 14px;
+}
+
+.board.is-solved {
+  border-style: solid;
+  border-color: var(--ok);
+  box-shadow: inset 0 0 0 4px rgba(47, 158, 95, .12);
+}
+
+.ingredient {
+  /* Never shrink, so the flex-wrap levels behave predictably. */
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 74px;
+  height: 74px;
+  margin: 4px;
+  font-size: 30px;
+  line-height: 1;
+  background: var(--card);
+  border: 2px solid var(--line);
+  border-radius: 14px;
+  box-shadow: 0 4px 10px rgba(87, 55, 33, .12);
+  animation: pop-in .3s ease backwards;
+}
+
+.ingredient span {
+  margin-top: 4px;
+  font-family: "Nunito", sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .4px;
+  color: var(--ink-soft);
+}
+
+.board.is-solved .ingredient { animation: cheer .5s ease; }
+
+/* ----------------------------- code preview ------------------------------ */
+
+.code-preview {
+  margin-top: 16px;
+  padding: 12px 14px;
+  background: #3a2a20;
+  border-radius: 12px;
+  overflow-x: auto;
+}
+
+.code-preview pre {
+  margin: 0;
+  font-family: "Consolas", "Menlo", monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #ffd98a;
+  white-space: pre;
+}
+
+/* ------------------------------- overlay -------------------------------- */
+
+.win-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(51, 35, 26, .72);
+}
+
+.win-overlay[hidden] { display: none; }
+
+.win-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 420px;
+  padding: 34px 28px;
+  text-align: center;
+  background: var(--card);
+  border-radius: var(--radius);
+  animation: pop-in .3s ease;
+}
+
+.win-emoji { font-size: 58px; }
+.win-card h2 { margin: 10px 0 6px; font-size: 24px; }
+.win-card p { margin: 0 0 16px; color: var(--ink-soft); }
+
+/* -------------------------------- footer -------------------------------- */
+
+.site-footer {
+  max-width: 1060px;
+  margin: 30px auto 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+/* ------------------------------ animations ------------------------------ */
+
+@keyframes pop-in {
+  from { opacity: 0; transform: scale(.82); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes cheer {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  30%      { transform: translateY(-10px) rotate(-6deg); }
+  60%      { transform: translateY(-4px) rotate(5deg); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25%      { transform: translateX(-6px); }
+  75%      { transform: translateX(6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ------------------------------ responsive ------------------------------ */
+
+@media (max-width: 900px) {
+  .layout { flex-direction: column; align-items: stretch; }
+  .panel, .board-panel { flex: 1 1 auto; }
+}
+
+@media (max-width: 560px) {
+  body { padding: 0 10px 30px; }
+
+  .site-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 18px;
+  }
+
+  .scoreboard { width: 100%; justify-content: space-between; }
+  .score-box { flex: 1 1 0; min-width: 0; }
+
+  .brand-text h1 { font-size: 25px; }
+  .ticket-goal { font-size: 17px; }
+
+  .panel { padding: 16px; }
+
+  .control { flex-direction: column; align-items: flex-start; }
+  .control select { width: 100%; max-width: none; }
+
+  .actions .btn { flex: 1 1 140px; }
+}
